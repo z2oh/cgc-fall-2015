@@ -35,35 +35,6 @@ public class WallCrab : MonoBehaviour
     {
         Vector2 input = Vector2.zero;
 
-        // This code is for just running into the wall and you climb up it.
-
-        /*
-        if (controller.collisions.above || controller.collisions.below)
-        {
-            velocity.y = 0;
-        }
-
-        if (inputHandler.shouldUpdate)
-        {
-            input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        }
-
-        float targetVelocityX = input.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-
-        Debug.Log("Is the cube colliding right: " + controller.collisions.right);
-        if (controller.collisions.right)
-        {
-            velocity.y = velocity.x;
-            //velocity.x = ;
-        }
-        else
-        {
-            velocity.y += gravity * Time.deltaTime;
-        }
-        controller.Move(velocity * Time.deltaTime);
-        */
-        
         if (inputHandler.shouldUpdate)
         {
             input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -71,29 +42,37 @@ public class WallCrab : MonoBehaviour
             {
                 isOnWallRight = !isOnWallRight;
                 isOnWallLeft = false;
+                velocity = Vector2.zero;
             }
             if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.left)
             {
                 isOnWallLeft = !isOnWallLeft;
                 isOnWallRight = false;
+                velocity = Vector2.zero;
             }
-            
         }
-
-        Debug.Log(isOnWallRight + ", " + controller.collisions.right);
 
         if (isOnWallRight)
         {
-            float inputVelocity = 0;
-            if (input.x > 0 && input.y > 0)
-                inputVelocity = Mathf.Max(input.x, input.y);
-            else if (input.x < 0 && input.y < 0)
-                inputVelocity = Mathf.Min(input.x, input.y);
-
+            if (!controller.collisions.right)
+                isOnWallRight = false;
+            float inputVelocity = Mathf.Clamp((input.x + input.y), -1, 1);
             float targetVelocityX = inputVelocity * moveSpeed;
             velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityX, ref velocityXSmoothing, accelerationTimeGrounded);
-            velocity.x = velocity.y;
+            velocity.x = Mathf.Abs(velocity.y + 0.05f);
             controller.Move(velocity * Time.deltaTime);
+            Debug.Log(velocity);
+        }
+        else if (isOnWallLeft)
+        {
+            if (!controller.collisions.left)
+                isOnWallLeft = false;
+            float inputVelocity = Mathf.Clamp((input.x + input.y), -1, 1);
+            float targetVelocityX = -inputVelocity * moveSpeed;
+            velocity.y = Mathf.SmoothDamp(velocity.y, targetVelocityX, ref velocityXSmoothing, accelerationTimeGrounded);
+            velocity.x = -Mathf.Abs(velocity.y - 0.05f);
+            controller.Move(velocity * Time.deltaTime);
+            Debug.Log(velocity);
         }
         else if (!isOnWallLeft && !isOnWallRight)
         {
@@ -106,6 +85,5 @@ public class WallCrab : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
         }
-         
     }
 }

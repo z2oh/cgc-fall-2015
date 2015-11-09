@@ -36,6 +36,7 @@ public class ActiveController : MonoBehaviour
             if (index >= playerControlledCharacters.Length)
                 index = 0;
             playerControlledCharacters[index].GetComponent<InputHandler>().shouldUpdate = true;
+            GetComponent<FollowPlayer>().player = playerControlledCharacters[index];
         }
 	}
 }
