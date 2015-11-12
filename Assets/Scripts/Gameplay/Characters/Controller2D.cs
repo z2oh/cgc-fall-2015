@@ -6,6 +6,9 @@ public class Controller2D : MonoBehaviour
 {
     public LayerMask collisionMask;
 
+    public static int ObstacleLayer = 9;
+    public static int NoCLimbObstacleLayer = 10;
+
     const float skinWidth = 0.15f;
 
     public int horizontalRayCount = 10;
@@ -20,7 +23,7 @@ public class Controller2D : MonoBehaviour
     RaycastOrigins raycastOrigins;
     public CollisionInfo collisions;
 
-	void Start ()
+    void Start ()
     {
         collider = GetComponent<BoxCollider2D>();
         CalculateRaySpacing();
@@ -54,7 +57,7 @@ public class Controller2D : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
             //Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
-
+            
             if (hit)
             {
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
@@ -69,6 +72,14 @@ public class Controller2D : MonoBehaviour
 
                 collisions.left = directionX == -1;
                 collisions.right = directionX == 1;
+                if(collisions.left)
+                {
+                    collisions.leftColl = hit.collider;
+                }
+                if(collisions.right)
+                {
+                    collisions.rightColl = hit.collider;
+                }
             }
         }
     }
@@ -93,6 +104,14 @@ public class Controller2D : MonoBehaviour
 
                 collisions.below = directionY == -1;
                 collisions.above = directionY == 1;
+                if (collisions.above)
+                {
+                    collisions.aboveColl = hit.collider;
+                }
+                if (collisions.below)
+                {
+                    collisions.belowColl = hit.collider;
+                }
             }
         }
     }
@@ -137,9 +156,13 @@ public class Controller2D : MonoBehaviour
         public bool above, below;
         public bool left, right;
 
+        public Collider2D aboveColl, belowColl;
+        public Collider2D leftColl, rightColl;
+
         public void Reset()
         {
             above = below = left = right = false;
+            aboveColl = belowColl = leftColl = rightColl = null;
         }
     }
 }

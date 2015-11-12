@@ -55,7 +55,7 @@ public class WallCrab : MonoBehaviour
             // We grab the input values from the active controller.
             input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             // If the player presses space and is colliding with some object to the right, then the isOnWallRight bool is toggled.
-            if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.right)
+            if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.right && controller.collisions.rightColl.gameObject.layer != Controller2D.NoCLimbObstacleLayer)
             {
                 // isOnWallRight is toggled.
                 isOnWallRight = !isOnWallRight;
@@ -64,7 +64,7 @@ public class WallCrab : MonoBehaviour
                 velocity = Vector2.zero;
             }
             // If the player presses space and is colliding with some object to the left, then the isOnWallLeft bool is toggled.
-            if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.left)
+            if (Input.GetKeyDown(KeyCode.Space) && controller.collisions.left && controller.collisions.leftColl.gameObject.layer != Controller2D.NoCLimbObstacleLayer)
             {
                 // isOnWallLeft is toggled.
                 isOnWallLeft = !isOnWallLeft;

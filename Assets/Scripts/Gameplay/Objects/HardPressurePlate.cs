@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class HardPressurePlate : MonoBehaviour {
-
+public class HardPressurePlate : MonoBehaviour
+{
     public GameObject obj;
 
     int numActive = 0;
@@ -13,7 +13,6 @@ public class HardPressurePlate : MonoBehaviour {
         if (coll.gameObject.GetComponent<ObjectInfo>() != null && coll.gameObject.GetComponent<ObjectInfo>().weight > 5)
         {
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 0.5f, transform.localScale.z);
-            //transform.Translate(new Vector3(0, -.15f, 0));
             obj.GetComponent<Activator>().Activate();
             numActive++;
         }
@@ -24,13 +23,11 @@ public class HardPressurePlate : MonoBehaviour {
         if (coll.gameObject.GetComponent<ObjectInfo>() != null && coll.gameObject.GetComponent<ObjectInfo>().weight > 5)
         {
             numActive--;
+            if (numActive == 0)
+            {
+                transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 2f, transform.localScale.z);
+                obj.GetComponent<Activator>().Deactivate();
+            }
         }
-        if(numActive == 0)
-        {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 2f, transform.localScale.z);
-            //transform.Translate(new Vector3(0, +.15f, 0));
-            obj.GetComponent<Activator>().Activate();
-        }
-
     }
 }

@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 public class Button : MonoBehaviour
 {
-
     public GameObject obj;
     bool activated;
-
 
     Vector3 oldScale;
     List<Collider2D> activeCollisions = new List<Collider2D>();

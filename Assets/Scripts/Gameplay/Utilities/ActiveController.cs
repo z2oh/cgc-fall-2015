@@ -9,7 +9,7 @@ public class ActiveController : MonoBehaviour
     // This is the index of the actively controlled character.
     int index;
 
-	void Start ()
+	void Start()
     {
         // All the potentially player controlled characters are added to this array.
         playerControlledCharacters = GameObject.FindGameObjectsWithTag("PlayerControlled");
@@ -28,7 +28,7 @@ public class ActiveController : MonoBehaviour
         playerControlledCharacters[index].GetComponent<InputHandler>().shouldUpdate = true;
 	}
 	
-	void Update ()
+	void Update()
     {
 	    if(Input.GetKeyDown(KeyCode.Tab))
         {
@@ -44,5 +44,6 @@ public class ActiveController : MonoBehaviour
             // We set the camera's 'FollowPlayer' script to follow the currently active player.
             GetComponent<FollowPlayer>().player = playerControlledCharacters[index];
         }
+        // TODO: add 1-9 control groups to select crabs.
 	}
 }
