@@ -1,34 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Activate : MonoBehaviour {
+public class Activator : MonoBehaviour {
 
     public bool door;
-
-    bool invoked;
     Vector2 oldScale;
 
-    public void Invoke()
+    int numActivations;
+    bool activated;
+
+    public void Activate()
     {
-        if (!invoked)
+        numActivations++;
+        if (!activated)
         {
             if (door)
             {
                 oldScale = transform.localScale;
                 transform.localScale *= 0;
-                invoked = true;
+                activated = true;
             }
         }
     }
 
-    public void Uninvoke()
+    public void Deactivate()
     {
-        if(invoked)
+        numActivations--;
+        if(numActivations == 0 && activated)
         {
             if (door)
             {
                 transform.localScale = oldScale;
-                invoked = false;
+                activated = false;
             }
         }
     }

@@ -32,12 +32,12 @@ public class Button : MonoBehaviour
                         {
                             oldScale = transform.localScale;
                             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 0.5f, transform.localScale.z);
-                            obj.GetComponent<Activate>().Invoke();
+                            obj.GetComponent<Activator>().Activate();
                         }
                         else
                         {
                             transform.localScale = oldScale;
-                            obj.GetComponent<Activate>().Uninvoke();
+                            obj.GetComponent<Activator>().Deactivate();
                         }
                     }
                 }
