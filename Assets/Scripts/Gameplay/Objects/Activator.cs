@@ -4,7 +4,8 @@ using System.Collections;
 public class Activator : MonoBehaviour {
 
     public bool door;
-    Vector2 oldScale;
+    public Material doorOpen;
+    public Material doorClosed;
 
     int numActivations;
     bool activated;
@@ -16,8 +17,8 @@ public class Activator : MonoBehaviour {
         {
             if (door)
             {
-                oldScale = transform.localScale;
-                transform.localScale *= 0;
+                GetComponent<MeshRenderer>().material = doorOpen;
+                GetComponent<BoxCollider2D>().enabled = false;
                 activated = true;
             }
         }
@@ -30,7 +31,8 @@ public class Activator : MonoBehaviour {
         {
             if (door)
             {
-                transform.localScale = oldScale;
+                GetComponent<MeshRenderer>().material = doorClosed;
+                GetComponent<BoxCollider2D>().enabled = true;
                 activated = false;
             }
         }

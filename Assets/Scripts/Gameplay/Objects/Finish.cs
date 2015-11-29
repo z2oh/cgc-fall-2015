@@ -7,8 +7,7 @@ public class Finish : MonoBehaviour
     {
         if (coll.gameObject.GetComponent<ObjectInfo>().weight > 5)
         {
-            print("quit");
-            Application.Quit();
+            Application.LoadLevel("main_menu");
         }
     }
 }

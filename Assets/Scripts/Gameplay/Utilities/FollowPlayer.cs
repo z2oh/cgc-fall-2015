@@ -3,7 +3,6 @@ using System.Collections;
 
 public class FollowPlayer : MonoBehaviour
 {
-
     // This is the current player that the camera is following.
     public GameObject player;
 
@@ -13,8 +12,17 @@ public class FollowPlayer : MonoBehaviour
     // This is the maximum distance that the camera can be away from the player before moving. This makes it look a little bit smoother.
     public float maxDistance = 1;
 
+    void Start ()
+    {
+        player = GameObject.Find("player");
+    }
+
 	void Update ()
     {
+        if(null == player)
+        {
+            player = GameObject.Find("player(Clone)");
+        }
         // The player and camera positions are put into Vector2 objects.
         Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
         Vector2 cameraPos = new Vector2(transform.position.x, transform.position.y);

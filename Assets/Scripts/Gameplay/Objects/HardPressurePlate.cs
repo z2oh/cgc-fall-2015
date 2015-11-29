@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class HardPressurePlate : MonoBehaviour
 {
-    public GameObject obj;
-
     int numActive = 0;
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -13,7 +11,8 @@ public class HardPressurePlate : MonoBehaviour
         if (coll.gameObject.GetComponent<ObjectInfo>() != null && coll.gameObject.GetComponent<ObjectInfo>().weight > 5)
         {
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 0.5f, transform.localScale.z);
-            obj.GetComponent<Activator>().Activate();
+            foreach(GameObject obj in GetComponent<ObjectActivator>().objects)
+                obj.GetComponent<Activator>().Activate();
             numActive++;
         }
     }
@@ -26,7 +25,8 @@ public class HardPressurePlate : MonoBehaviour
             if (numActive == 0)
             {
                 transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 2f, transform.localScale.z);
-                obj.GetComponent<Activator>().Deactivate();
+                foreach (GameObject obj in GetComponent<ObjectActivator>().objects)
+                    obj.GetComponent<Activator>().Deactivate();
             }
         }
     }

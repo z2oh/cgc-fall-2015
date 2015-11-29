@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class Button : MonoBehaviour
 {
-    public GameObject obj;
     bool activated;
 
     Vector3 oldScale;
     List<Collider2D> activeCollisions = new List<Collider2D>();
+
 
     void Start()
     {
@@ -29,13 +29,15 @@ public class Button : MonoBehaviour
                         if (activated)
                         {
                             oldScale = transform.localScale;
-                            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 0.5f, transform.localScale.z);
-                            obj.GetComponent<Activator>().Activate();
+                            transform.localScale = new Vector3(transform.localScale.x * 0.5f, transform.localScale.y, transform.localScale.z);
+                            foreach (GameObject obj in GetComponent<ObjectActivator>().objects)
+                                obj.GetComponent<Activator>().Activate();
                         }
                         else
                         {
                             transform.localScale = oldScale;
-                            obj.GetComponent<Activator>().Deactivate();
+                            foreach (GameObject obj in GetComponent<ObjectActivator>().objects)
+                                obj.GetComponent<Activator>().Deactivate();
                         }
                     }
                 }
