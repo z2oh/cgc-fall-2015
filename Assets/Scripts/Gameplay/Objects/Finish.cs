@@ -7,6 +7,7 @@ public class Finish : MonoBehaviour
     {
         if (coll.gameObject.GetComponent<ObjectInfo>().weight > 5)
         {
+            GameObject.Destroy(GameObject.Find("PathHolder"));
             Application.LoadLevel("main_menu");
         }
     }

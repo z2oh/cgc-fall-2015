@@ -11,7 +11,6 @@ public class PathHolderScript : MonoBehaviour
     public void PressedTut()
     {
         GameObject.DontDestroyOnLoad(GameObject.Find("PathHolder"));
-        print("this worked");
         print(File.Exists(path) + ", " + path);
         if (File.Exists(path))
             Application.LoadLevel("main");
